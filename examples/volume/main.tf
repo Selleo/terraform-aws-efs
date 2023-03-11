@@ -1,7 +1,7 @@
 resource "random_id" "example" {
   byte_length = 4
 
-  prefix = "tf-example"
+  prefix = "efs-"
 }
 
 module "vpc" {
@@ -19,3 +19,21 @@ module "vpc" {
   enable_vpn_gateway = false
 }
 
+
+module "efs" {
+  source = "../../modules/volume"
+
+  context = {
+    namespace = "selleo"
+    stage     = "test"
+    name      = "logs"
+  }
+
+  name = random_id.example.hex
+  vpc = {
+    id          = module.vpc.vpc_id
+    subnets     = module.vpc.public_subnets
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+  }
+  backup = true
+}
