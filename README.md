@@ -1,6 +1,6 @@
-# Terraform RENAME_ME module
+# Terraform EFS module
 
-TODO
+Elastic file system terraform module.
 
 <!-- BEGIN_TF_DOCS -->
 
